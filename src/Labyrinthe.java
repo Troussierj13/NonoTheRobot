@@ -2,11 +2,18 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
 
-public class Labyrinthe {
+public class Labyrinthe implements Explorable<Vector2<Integer>>{
+
+    public enum CaseType {
+        EMPTY, LOCKED, VISITED
+    }
+
     private int XStart, YStart;
     private int XEnd, YEnd;
-    private boolean[][] lab;
+    private CaseType[][] lab;
     private String name;
+
+    private LinkedList<Node> actual;
 
     Labyrinthe(String path){
         try {
@@ -28,54 +35,83 @@ public class Labyrinthe {
 
             line = buffer.readLine();
             String[] size = line.split(":");
-            lab = new boolean[Integer.parseInt(size[1])][Integer.parseInt(size[0])];
+            lab = new CaseType[Integer.parseInt(size[1])][Integer.parseInt(size[0])];
 
             for (int y = 0; y < lab[0].length; y++) {
                 line = buffer.readLine();
                 for (int x = 0; x < lab.length; x++) {
-                    lab[x][y] = line.charAt(x) != ' ';
+                    lab[x][y] = (line.charAt(x) != ' ') ? CaseType.LOCKED : CaseType.EMPTY;
                 }
             }
+
+            lab[XStart][YStart] = CaseType.START;
+            lab[XEnd][YEnd] = CaseType.END;
 
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
 
-        for (boolean[] b: lab) {
+        for (CaseType[] b: lab) {
             System.out.println(Arrays.toString(b));
         }
-        LinkedList<Node> visited = new LinkedList<>();
-        LinkedList<Node> actual = new LinkedList<>();
+
+        actual = new LinkedList<>();
 
         actual.add(new Node<Integer>(XStart, YStart, null));
 
-        while (!actual.isEmpty()) {
+        while (isFinish()) {
             Node<Integer> pos = actual.pop();
-            if (!visited.contains(pos)) {
-                visited.add(pos);
-                Stack<Node> neighbours = new Stack<>();
-                neighbours.add(new Node<>(pos.vector.x + 1, pos.vector.y, pos));
-                neighbours.add(new Node<>(pos.vector.x - 1, pos.vector.y, pos));
-                neighbours.add(new Node<>(pos.vector.x, pos.vector.y + 1, pos));
-                neighbours.add(new Node<>(pos.vector.x, pos.vector.y - 1, pos));
+            if (lab[pos.vector.x][pos.vector.y] != CaseType.VISITED && lab[pos.vector.x][pos.vector.y] != CaseType.LOCKED) {
+                lab[pos.vector.x][pos.vector.y] = CaseType.VISITED;
+                Stack<Node> neighbours = NextStep(pos);
                 while (!neighbours.empty()) {
                     Node<Integer> n = neighbours.pop();
-                    if (n.vector.x >= 0 && n.vector.x < lab.length && n.vector.y >= 0 && n.vector.y < lab[0].length) {
-                        if (!lab[n.vector.x][n.vector.y]) {
-                            if (pos.vector.x == XEnd && pos.vector.y == YEnd) {
-                                System.out.println("END");
-                                while (n.parent!=null) {
-                                    System.out.println(n.vector.x + " " + n.vector.y);
-                                    n = n.parent;
-                                }
-                                break;
-                            }
-                            actual.add(n);
+                    if (lab[n.vector.x][n.vector.y] == CaseType.EMPTY) {
+                        actual.add(n);
+                    } else if (lab[n.vector.x][n.vector.y] == CaseType.END) {
+                        System.out.println("END");
+                        while (n.parent!=null) {
+                            System.out.println(n.vector.x + " " + n.vector.y);
+
+                            n = n.parent;
+                            actual.clear();
                         }
+                        break;
                     }
                 }
             }
         }
+    }
 
+
+    @Override
+    public List<> NextStep() {
+        if(pos == null) {
+
+        } else {
+            LinkedList<Node> neighbours = new Stack<>();
+            Stack<Node> next = new Stack<>();
+            neighbours.add(new Node<>(pos.vector.x + 1, pos.vector.y, pos));
+            neighbours.add(new Node<>(pos.vector.x - 1, pos.vector.y, pos));
+            neighbours.add(new Node<>(pos.vector.x, pos.vector.y + 1, pos));
+            neighbours.add(new Node<>(pos.vector.x, pos.vector.y - 1, pos));
+
+            for (Node<Integer> n : neighbours) {
+                if (n.vector.x >= 0 && n.vector.x < lab.length && n.vector.y >= 0 && n.vector.y < lab[0].length) {
+                    next.push(n);
+                }
+            }
+        }
+
+        return next;
+    }
+
+    @Override
+    public boolean isFinish() {
+        return !actual.isEmpty();
+    }
+
+    public CaseType[][] getLab() {
+        return lab;
     }
 }
