@@ -1,8 +1,8 @@
-import java.util.List;
+import java.util.ArrayList;
 
 public interface Explorable<T> {
 
-    List<T> NextStep();
-    boolean isFinish();
+    ArrayList<T> NextStep(T step);
+    boolean isFinish(T pos);
 
 }

@@ -4,18 +4,15 @@ import java.util.*;
 
 public class Labyrinthe implements Explorable<Vector2<Integer>>{
 
-    public enum CaseType {
-        EMPTY, LOCKED, VISITED
-    }
-
-    private int XStart, YStart;
-    private int XEnd, YEnd;
-    private CaseType[][] lab;
+    private Vector2<Integer> start;
+    private Vector2<Integer> end;
+    private boolean[][] lab;
     private String name;
 
-    private LinkedList<Node> actual;
-
     Labyrinthe(String path){
+        start = new Vector2<>();
+        end = new Vector2<>();
+
         try {
             FileReader file = new FileReader(path);
             BufferedReader buffer = new BufferedReader(file);
@@ -24,81 +21,49 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
 
             name = buffer.readLine();
             line = buffer.readLine();
-            String[] start = line.split(":");
-            XStart = Integer.parseInt(start[1]);
-            YStart = Integer.parseInt(start[0]);
+            String[] sStart = line.split(":");
+            start.x = Integer.parseInt(sStart[1]);
+            start.y = Integer.parseInt(sStart[0]);
 
             line = buffer.readLine();
-            String[] end = line.split(":");
-            XEnd = Integer.parseInt(end[1]);
-            YEnd = Integer.parseInt(end[0]);
+            String[] sEnd = line.split(":");
+            end.x = Integer.parseInt(sEnd[1]);
+            end.y = Integer.parseInt(sEnd[0]);
 
             line = buffer.readLine();
             String[] size = line.split(":");
-            lab = new CaseType[Integer.parseInt(size[1])][Integer.parseInt(size[0])];
+            lab = new boolean[Integer.parseInt(size[1])][Integer.parseInt(size[0])];
 
             for (int y = 0; y < lab[0].length; y++) {
                 line = buffer.readLine();
                 for (int x = 0; x < lab.length; x++) {
-                    lab[x][y] = (line.charAt(x) != ' ') ? CaseType.LOCKED : CaseType.EMPTY;
+                    lab[x][y] = line.charAt(x) != ' ';
                 }
             }
-
-            lab[XStart][YStart] = CaseType.START;
-            lab[XEnd][YEnd] = CaseType.END;
 
         } catch (java.io.IOException e) {
             e.printStackTrace();
-        }
-
-        for (CaseType[] b: lab) {
-            System.out.println(Arrays.toString(b));
-        }
-
-        actual = new LinkedList<>();
-
-        actual.add(new Node<Integer>(XStart, YStart, null));
-
-        while (isFinish()) {
-            Node<Integer> pos = actual.pop();
-            if (lab[pos.vector.x][pos.vector.y] != CaseType.VISITED && lab[pos.vector.x][pos.vector.y] != CaseType.LOCKED) {
-                lab[pos.vector.x][pos.vector.y] = CaseType.VISITED;
-                Stack<Node> neighbours = NextStep(pos);
-                while (!neighbours.empty()) {
-                    Node<Integer> n = neighbours.pop();
-                    if (lab[n.vector.x][n.vector.y] == CaseType.EMPTY) {
-                        actual.add(n);
-                    } else if (lab[n.vector.x][n.vector.y] == CaseType.END) {
-                        System.out.println("END");
-                        while (n.parent!=null) {
-                            System.out.println(n.vector.x + " " + n.vector.y);
-
-                            n = n.parent;
-                            actual.clear();
-                        }
-                        break;
-                    }
-                }
-            }
         }
     }
 
 
     @Override
-    public List<> NextStep() {
-        if(pos == null) {
+    public ArrayList<Vector2<Integer>> NextStep(Vector2<Integer> step) {
+        ArrayList<Vector2<Integer>> next = new ArrayList<>();
 
+        if(step == null) {
+            next.add(start);
         } else {
-            LinkedList<Node> neighbours = new Stack<>();
-            Stack<Node> next = new Stack<>();
-            neighbours.add(new Node<>(pos.vector.x + 1, pos.vector.y, pos));
-            neighbours.add(new Node<>(pos.vector.x - 1, pos.vector.y, pos));
-            neighbours.add(new Node<>(pos.vector.x, pos.vector.y + 1, pos));
-            neighbours.add(new Node<>(pos.vector.x, pos.vector.y - 1, pos));
+            ArrayList<Vector2<Integer>> neighbours = new ArrayList<>();
+            neighbours.add(new Vector2(step.x + 1, step.y));
+            neighbours.add(new Vector2(step.x - 1, step.y));
+            neighbours.add(new Vector2(step.x, step.y + 1));
+            neighbours.add(new Vector2(step.x, step.y - 1));
 
-            for (Node<Integer> n : neighbours) {
-                if (n.vector.x >= 0 && n.vector.x < lab.length && n.vector.y >= 0 && n.vector.y < lab[0].length) {
-                    next.push(n);
+            for (Vector2<Integer> n : neighbours) {
+                if (n.x >= 0 && n.x < lab.length && n.y >= 0 && n.y < lab[0].length
+                        && lab[n.x][n.y] == false) {
+                    next.add(n);
                 }
             }
         }
@@ -107,11 +72,51 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
     }
 
     @Override
-    public boolean isFinish() {
-        return !actual.isEmpty();
+    public boolean isFinish(Vector2<Integer> pos) {
+        return end.equals(pos);
     }
 
-    public CaseType[][] getLab() {
-        return lab;
+    @Override
+    public String toString() {
+        String str = "";
+
+        for (int y=0 ; y<lab[0].length ; y++) {
+            for (int x=0 ; x<lab.length ; x++) {
+                if (x == start.x && y == start.y) {
+                    str += "D";
+                } else if (x == end.x && y == end.y){
+                    str += "A";
+                } else if (lab[x][y]) {
+                    str += "0";
+                }
+                else {
+                    str += " ";
+                }
+            }
+            str += "\n";
+        }
+
+        return str;
+    }
+
+    public char[][] getCharLab(){
+        char[][] array = new char[lab.length][lab[0].length];
+
+        for (int y=0 ; y<lab[0].length ; y++) {
+            for (int x=0 ; x<lab.length ; x++) {
+                if (x == start.x && y == start.y) {
+                    array[x][y] = 'D';
+                } else if (x == end.x && y == end.y){
+                    array[x][y] = 'A';
+                } else if (lab[x][y]) {
+                    array[x][y] = '0';
+                }
+                else {
+                    array[x][y] = ' ';
+                }
+            }
+        }
+
+        return array;
     }
 }

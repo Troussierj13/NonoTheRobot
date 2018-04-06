@@ -22,4 +22,9 @@ public class Vector2<T>{
         Vector2<T> n = (Vector2<T>)o;
         return (x == n.x && y == n.y);
     }
+
+    @Override
+    public String toString() {
+        return new String("[" + x + ", " + y + "]");
+    }
 }

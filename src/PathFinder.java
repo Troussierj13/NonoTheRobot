@@ -1,40 +1,36 @@
-import java.util.LinkedList;
-import java.util.Stack;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.*;
+import java.util.concurrent.ArrayBlockingQueue;
 
 public class PathFinder {
 
     private static LinkedList<Node> actual;
 
-    public static <T> LinkedList<T> FindPath(Explorable<T> exp) {
-        LinkedList<Vector2<Integer>> res = new LinkedList<>();
+    public static <T> boolean FindPath(@NotNull Explorable<T> exp, List<T> path) {
+        ArrayBlockingQueue<Node<T>> toVisit = new ArrayBlockingQueue<>(100);
+        ArrayList<T> visited = new ArrayList<>();
 
-        actual = new LinkedList<>();
+        toVisit.add(new Node<T>(exp.NextStep(null).get(0), null));
 
-        actual.add(new Node<Integer>(lab.getStartPos.x, lab.getStartPos.x, null));
-
-        while (lab.isFinish()) {
-            Node<Integer> pos = actual.pop();
-            if (lab.getLab()[pos.vector.x][pos.vector.y] != Labyrinthe.CaseType.VISITED && lab.getLab()[pos.vector.x][pos.vector.y] != Labyrinthe.CaseType.LOCKED) {
-                lab.getLab()[pos.vector.x][pos.vector.y] = Labyrinthe.CaseType.VISITED;
-                Stack<Node> neighbours = lab.NextStep(pos);
-                while (!neighbours.empty()) {
-                    Node<Integer> n = neighbours.pop();
-                    if (lab[n.vector.x][n.vector.y] == Labyrinthe.CaseType.EMPTY) {
-                        actual.add(n);
-                    } else if (lab[n.vector.x][n.vector.y] == Labyrinthe.CaseType.END) {
-                        System.out.println("END");
-                        while (n.parent!=null) {
-                            System.out.println(n.vector.x + " " + n.vector.y);
-
-                            n = n.parent;
-                            actual.clear();
-                        }
-                        break;
-                    }
+        while(!toVisit.isEmpty()) {
+            Node<T> actual = toVisit.poll();
+            if(exp.isFinish(actual.value)) {
+                while(actual != null) {
+                    path.add(0, actual.value);
+                    actual = actual.parent;
+                }
+                return true;
+            }
+            visited.add(actual.value);
+            ArrayList<T> neighbours = exp.NextStep(actual.value);
+            for(T neighbour : neighbours) {
+                if(!visited.contains(neighbour)) {
+                    toVisit.add(new Node<T>(neighbour, actual));
                 }
             }
         }
 
-        return res;
+        return false;
     }
 }
