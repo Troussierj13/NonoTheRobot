@@ -1,6 +1,5 @@
 package NonoTheRobot;
 
-import org.jetbrains.annotations.NotNull;
 
 public class Vector2<T>{
     T x, y;
@@ -20,7 +19,7 @@ public class Vector2<T>{
     }
 
     @Override
-    public boolean equals(@NotNull Object o) {
+    public boolean equals(Object o) {
         Vector2<T> n = (Vector2<T>)o;
         return (x == n.x && y == n.y);
     }

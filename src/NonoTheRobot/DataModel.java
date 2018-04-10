@@ -37,7 +37,7 @@ public class DataModel {
         ArrayList<String> fullStep = new ArrayList<>();
         path = new LinkedList<>();
 
-        if(lab == null) {
+        if (lab == null) {
             return null;
         } else {
             if (PathFinder.FindPath(lab, path)) {

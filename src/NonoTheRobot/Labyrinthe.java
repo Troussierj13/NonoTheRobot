@@ -22,7 +22,7 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
     public ArrayList<Vector2<Integer>> NextStep(Vector2<Integer> step) {
         ArrayList<Vector2<Integer>> next = new ArrayList<>();
 
-        if(step == null) {
+        if (step == null) {
             next.add(start);
         } else {
             ArrayList<Vector2<Integer>> neighbours = new ArrayList<>();
