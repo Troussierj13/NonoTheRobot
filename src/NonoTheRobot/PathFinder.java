@@ -12,6 +12,7 @@ public class PathFinder {
         ArrayList<T> visited = new ArrayList<>();
 
         toVisit.add(new Node<T>(exp.NextStep(null).get(0), null));
+        visited.add(exp.NextStep(null).get(0));
 
         while(!toVisit.isEmpty()) {
             Node<T> actual = toVisit.poll();
@@ -22,7 +23,6 @@ public class PathFinder {
                 }
                 return true;
             }
-            //visited.add(actual.value);
             ArrayList<T> neighbours = exp.NextStep(actual.value);
             for(T neighbour : neighbours) {
                 if(!visited.contains(neighbour)) {
