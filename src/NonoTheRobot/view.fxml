@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<GridPane alignment="center" hgap="10" prefHeight="700.0" prefWidth="800.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NonoTheRobot.Controller">
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
+   <children>
+      <VBox alignment="CENTER" prefHeight="650.0" prefWidth="752.0">
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button fx:id="chooseFile" mnemonicParsing="false" onAction="#openChooser" text="Choose file">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets right="50.0" />
+                     </HBox.margin>
+                  </Button>
+                  <TextField fx:id="pathFile" editable="false" prefHeight="27.0" prefWidth="300.0">
+                     <HBox.margin>
+                        <Insets right="200.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="display" mnemonicParsing="false" onAction="#displayLaby" text="Display" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#previousStep" text="Previous Step">
+                     <HBox.margin>
+                        <Insets right="40.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#nextStep" text="Next Step">
+                     <HBox.margin>
+                        <Insets right="150.0" />
+                     </HBox.margin></Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#ZoomM" text="Zoom -">
+                     <HBox.margin>
+                        <Insets right="40.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onMouseClicked="#ZoomP" text="Zoom +" />
+               </children>
+            </HBox>
+            <TextArea fx:id="text" editable="false" prefHeight="596.0" prefWidth="642.0">
+               <font>
+                  <Font name="Menlo Regular" size="18.0" />
+               </font>
+            </TextArea>
+         </children>
+      </VBox>
+   </children>
+</GridPane>

@@ -1,3 +1,5 @@
+package NonoTheRobot;
+
 import org.jetbrains.annotations.NotNull;
 
 public class Vector2<T>{
@@ -21,6 +23,14 @@ public class Vector2<T>{
     public boolean equals(@NotNull Object o) {
         Vector2<T> n = (Vector2<T>)o;
         return (x == n.x && y == n.y);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 42;
+        result = 31*result + x.hashCode();
+        result = 31*result + y.hashCode();
+        return result;
     }
 
     @Override

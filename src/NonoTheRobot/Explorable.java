@@ -1,3 +1,5 @@
+package NonoTheRobot;
+
 import java.util.ArrayList;
 
 public interface Explorable<T> {
