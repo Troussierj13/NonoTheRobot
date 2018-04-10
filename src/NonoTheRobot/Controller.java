@@ -1,5 +1,9 @@
 package NonoTheRobot;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -8,6 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,13 +45,8 @@ public class Controller {
         this.model = model;
     }
 
-    @FXML
-    protected void displayLaby() {
-        if(currentStep > 0) {
-            text.setText(fullStep.get(currentStep));
-        }else {
-            text.setText(model.getLabyrintheString());
-        }
+    private void displayLaby() {
+        text.setText(fullStep.get(currentStep));
 
         if(fullStep.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "No path found", ButtonType.OK);
@@ -54,19 +54,11 @@ public class Controller {
         }
     }
 
-    @FXML
     protected void nextStep() {
-        if(currentStep<fullStep.size()-1) {
+        if (currentStep<fullStep.size()-1) {
             currentStep++;
-        }
-
-        displayLaby();
-    }
-
-    @FXML
-    protected void previousStep() {
-        if(currentStep>0) {
-            currentStep--;
+        } else {
+            currentStep = 0;
         }
 
         displayLaby();
@@ -101,6 +93,11 @@ public class Controller {
             currentStep = 0;
             displayLaby();
         }
+
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(100), event -> nextStep()));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
+
     }
 
 }

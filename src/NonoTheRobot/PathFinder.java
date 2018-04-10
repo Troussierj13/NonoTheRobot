@@ -1,13 +1,11 @@
 package NonoTheRobot;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
 public class PathFinder {
 
-    public static <T> boolean FindPath(@NotNull Explorable<T> exp, List<T> path) {
+    public static <T> boolean FindPath( Explorable<T> exp, List<T> path) {
         ArrayBlockingQueue<Node<T>> toVisit = new ArrayBlockingQueue<>(1000000);
         ArrayList<T> visited = new ArrayList<>();
 
