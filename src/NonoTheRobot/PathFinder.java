@@ -1,7 +1,5 @@
 package NonoTheRobot;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.*;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -9,7 +7,7 @@ public class PathFinder {
 
     private static LinkedList<Node> actual;
 
-    public static <T> boolean FindPath(@NotNull Explorable<T> exp, List<T> path) {
+    public static <T> boolean FindPath(Explorable<T> exp, List<T> path) {
         ArrayBlockingQueue<Node<T>> toVisit = new ArrayBlockingQueue<>(1000000);
         ArrayList<T> visited = new ArrayList<>();
 
@@ -24,12 +22,13 @@ public class PathFinder {
                 }
                 return true;
             }
-            visited.add(actual.value);
-            System.out.println(actual.value.toString());
+            //visited.add(actual.value);
             ArrayList<T> neighbours = exp.NextStep(actual.value);
             for(T neighbour : neighbours) {
                 if(!visited.contains(neighbour)) {
+                    System.out.println(neighbour.toString());
                     toVisit.add(new Node<T>(neighbour, actual));
+                    visited.add(neighbour);
                 }
             }
         }
