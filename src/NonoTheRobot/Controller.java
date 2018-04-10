@@ -68,7 +68,6 @@ public class Controller {
 
     @FXML
     protected void ZoomM() {
-
         if (text.getFont().getSize() > 5) {
             text.setStyle("-fx-font-size: " + (text.getFont().getSize() - 2) + ";");
         }
@@ -91,7 +90,7 @@ public class Controller {
             displayLaby();
         }
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(100), event -> nextStep()));
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(10*fullStep.size()), event -> nextStep()));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
 
