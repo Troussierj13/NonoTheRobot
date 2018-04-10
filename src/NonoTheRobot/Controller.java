@@ -30,9 +30,6 @@ public class Controller {
     @FXML
     Button chooseFile;
 
-    @FXML
-    Button display;
-
     ArrayList<String> fullStep;
     int currentStep = 0;
 
