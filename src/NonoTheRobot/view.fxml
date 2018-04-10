@@ -52,7 +52,7 @@
             </HBox>
             <TextArea fx:id="text" editable="false" prefHeight="596.0" prefWidth="642.0">
                <font>
-                  <Font name="Menlo Regular" size="18.0" />
+                  <Font name="Bittypix Monospace" size="18.0" />
                </font>
             </TextArea>
          </children>
