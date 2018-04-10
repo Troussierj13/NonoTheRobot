@@ -4,6 +4,11 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
 
+/**
+ * Labyrinthe with 2 dimension.
+ * Is a array to case, a case can be a wall or not.
+ * Has a start position and a end position.
+ */
 public class Labyrinthe implements Explorable<Vector2<Integer>>{
 
     private Vector2<Integer> start;
@@ -11,6 +16,13 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
     private boolean[][] lab;
     private String name;
 
+    /**
+     * TODO
+     * @param name
+     * @param lab
+     * @param start
+     * @param end
+     */
     Labyrinthe(String name, boolean[][] lab, Vector2<Integer> start, Vector2<Integer> end){
         this.name = name;
         this.lab = lab;
@@ -18,6 +30,11 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
         this.end = end;
     }
 
+    /**
+     * TODO
+     * @param step
+     * @return
+     */
     @Override
     public ArrayList<Vector2<Integer>> NextStep(Vector2<Integer> step) {
         ArrayList<Vector2<Integer>> next = new ArrayList<>();
@@ -42,6 +59,11 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
         return next;
     }
 
+    /**
+     * TODO
+     * @param pos
+     * @return
+     */
     @Override
     public boolean isFinish(Vector2<Integer> pos) {
         return end.equals(pos);
@@ -70,6 +92,10 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
         return str;
     }
 
+    /**
+     * TODO
+     * @return
+     */
     public char[][] getCharLab(){
         char[][] array = new char[lab.length][lab[0].length];
 

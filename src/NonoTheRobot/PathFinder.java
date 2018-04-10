@@ -1,10 +1,15 @@
 package NonoTheRobot;
 
 import java.util.*;
-import java.util.concurrent.ArrayBlockingQueue;
 
 public class PathFinder {
 
+    /**
+     * Find the shortness path in a Explorable.
+     * @param exp Input variable : contain the element at explore
+     * @param path Output variable : contain the path found.
+     * @return true if a path is found, else false
+     */
     public static <T> boolean FindPath(Explorable<T> exp, List<T> path) {
         LinkedList<Node<T>> toVisit = new LinkedList<>();
         ArrayList<T> visited = new ArrayList<>();

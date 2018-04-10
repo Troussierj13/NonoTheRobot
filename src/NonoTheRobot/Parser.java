@@ -3,6 +3,9 @@ package NonoTheRobot;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+ * TODO
+ */
 public class Parser {
 
     public static Labyrinthe ParseLabyrinthe(String path) {

@@ -1,6 +1,8 @@
 package NonoTheRobot;
 
-
+/**
+ * Vector in two dimension type T
+ */
 public class Vector2<T>{
     T x, y;
 
