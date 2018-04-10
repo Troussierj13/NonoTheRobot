@@ -43,9 +43,10 @@ public class DataModel {
             if (PathFinder.FindPath(lab, path)) {
                 char[][] charLab = lab.getCharLab();
                 charLab[path.get(0).x][path.get(0).y] = 'R';
-                for (int i=1 ; i<path.size() ; i++) {
+                for (int i=1 ; i<path.size()-1 ; i++) {
                     charLab[path.get(i).x][path.get(i).y] = '.';
                 }
+                charLab[path.get(path.size()-1).x][path.get(path.size()-1).y] = 'A';
                 fullStep.add(labToString(charLab));
                 for (int i=1 ; i<path.size() ; i++) {
                     charLab[path.get(i).x][path.get(i).y] = 'R';
