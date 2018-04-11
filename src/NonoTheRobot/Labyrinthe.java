@@ -8,6 +8,7 @@ import java.util.*;
  * Labyrinthe with 2 dimension.
  * Is a array to case, a case can be a wall or not.
  * Has a start position and a end position.
+ * A labyrinth have a name.
  */
 public class Labyrinthe implements Explorable<Vector2<Integer>>{
 
@@ -17,11 +18,11 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
     private String name;
 
     /**
-     * TODO
-     * @param name
-     * @param lab
-     * @param start
-     * @param end
+     *
+     * @param name Name of this labyrinth
+     * @param lab two-dimensional array of boolean which contain wall and free space of the labyrinth
+     * @param start Starting position of the labyrinth
+     * @param end Ending position of the labyrinth
      */
     Labyrinthe(String name, boolean[][] lab, Vector2<Integer> start, Vector2<Integer> end){
         this.name = name;
@@ -31,9 +32,9 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
     }
 
     /**
-     * TODO
-     * @param step
-     * @return
+     * This function is override to function of Explorable.
+     * @param step Reference position.
+     * @return List of neighbours position to step (which are not wall). If step is null, return start position.
      */
     @Override
     public ArrayList<Vector2<Integer>> NextStep(Vector2<Integer> step) {
@@ -60,9 +61,9 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
     }
 
     /**
-     * TODO
-     * @param pos
-     * @return
+     * This function is override to function of Explorable.
+     * @param pos Check if this position is the end position.
+     * @return True if the parameter is the end position, else False.
      */
     @Override
     public boolean isFinish(Vector2<Integer> pos) {
@@ -93,8 +94,10 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
     }
 
     /**
-     * TODO
-     * @return
+     * Convert two-dimensional array of boolean to two-dimensional array of characters.
+     * Replace start position by 'D' and end position to 'A'.
+     * Replace the wall by '0' and free space by ' '.
+     * @return A two-dimensional array of characters that contains the elements of the labyrinth.
      */
     public char[][] getCharLab(){
         char[][] array = new char[lab.length][lab[0].length];
@@ -115,5 +118,12 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
         }
 
         return array;
+    }
+
+    /**
+     * @return Name of this labyrinth.
+     */
+    public String getName() {
+        return name;
     }
 }

@@ -1,16 +1,19 @@
 package NonoTheRobot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 public class PathFinder {
 
     /**
      * Find the shortness path in a Explorable.
-     * @param exp Input variable : contain the element at explore
+     * @param exp Input variable : contain the element explored.
      * @param path Output variable : contain the path found.
-     * @return true if a path is found, else false
+     * @return true if a path is found, else false.
      */
-    public static <T> boolean FindPath(Explorable<T> exp, List<T> path) {
+    public static <T> boolean FindPath(@NotNull Explorable<T> exp, @NotNull List<T> path) {
+
         LinkedList<Node<T>> toVisit = new LinkedList<>();
         ArrayList<T> visited = new ArrayList<>();
 
@@ -29,7 +32,6 @@ public class PathFinder {
             ArrayList<T> neighbours = exp.NextStep(actual.value);
             for (T neighbour : neighbours) {
                 if (!visited.contains(neighbour)) {
-                    System.out.println(neighbour.toString());
                     toVisit.add(new Node<T>(neighbour, actual));
                     visited.add(neighbour);
                 }

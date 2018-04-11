@@ -2,21 +2,13 @@ package NonoTheRobot;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
 
 
 public class Controller {
@@ -43,11 +35,12 @@ public class Controller {
     }
 
     private void displayLaby() {
-        text.setText(fullStep.get(currentStep));
-
         if(fullStep.isEmpty()) {
+            text.setText(model.getLabyrintheString());
             Alert alert = new Alert(Alert.AlertType.ERROR, "No path found", ButtonType.OK);
             alert.showAndWait();
+        } else {
+            text.setText(fullStep.get(currentStep));
         }
     }
 
@@ -90,7 +83,7 @@ public class Controller {
             displayLaby();
         }
 
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(10*fullStep.size()), event -> nextStep()));
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(10000.f/fullStep.size()), event -> nextStep()));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
 

@@ -2,17 +2,24 @@ package NonoTheRobot;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.regex.Pattern;
 
 /**
- * TODO
+ * Parse an explorable
  */
 public class Parser {
 
+    /**
+     * parse a labyrinthe from a labyrinthe file
+     * @param path path to labyrinthe file
+     * @return new parse labyrinthe
+     */
     public static Labyrinthe ParseLabyrinthe(String path) {
         Vector2<Integer> start = new Vector2<>();
         Vector2<Integer> end = new Vector2<>();
         boolean [][] lab = new boolean[0][0];
         String name = "";
+        final String delimiter = ":";
 
         try {
             FileReader file = new FileReader(path);
@@ -22,17 +29,17 @@ public class Parser {
 
             name = buffer.readLine();
             line = buffer.readLine();
-            String[] sStart = line.split(":");
+            String[] sStart = line.split(delimiter);
             start.x = Integer.parseInt(sStart[1]);
             start.y = Integer.parseInt(sStart[0]);
 
             line = buffer.readLine();
-            String[] sEnd = line.split(":");
+            String[] sEnd = line.split(delimiter);
             end.x = Integer.parseInt(sEnd[1]);
             end.y = Integer.parseInt(sEnd[0]);
 
             line = buffer.readLine();
-            String[] size = line.split(":");
+            String[] size = line.split(delimiter);
             lab = new boolean[Integer.parseInt(size[1])][Integer.parseInt(size[0])];
 
             for (int y = 0; y < lab[0].length; y++) {
