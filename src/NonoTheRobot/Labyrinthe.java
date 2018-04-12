@@ -1,5 +1,7 @@
 package NonoTheRobot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.*;
@@ -66,31 +68,8 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
      * @return True if the parameter is the end position, else False.
      */
     @Override
-    public boolean isFinish(Vector2<Integer> pos) {
+    public boolean isFinish(@NotNull Vector2<Integer> pos) {
         return end.equals(pos);
-    }
-
-    @Override
-    public String toString() {
-        String str = "";
-
-        for (int y=0 ; y<lab[0].length ; y++) {
-            for (int x=0 ; x<lab.length ; x++) {
-                if (x == start.x && y == start.y) {
-                    str += "D";
-                } else if (x == end.x && y == end.y){
-                    str += "A";
-                } else if (lab[x][y]) {
-                    str += "0";
-                }
-                else {
-                    str += " ";
-                }
-            }
-            str += "\n";
-        }
-
-        return str;
     }
 
     /**
@@ -125,5 +104,28 @@ public class Labyrinthe implements Explorable<Vector2<Integer>>{
      */
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        String str = "";
+
+        for (int y=0 ; y<lab[0].length ; y++) {
+            for (int x=0 ; x<lab.length ; x++) {
+                if (x == start.x && y == start.y) {
+                    str += "D";
+                } else if (x == end.x && y == end.y){
+                    str += "A";
+                } else if (lab[x][y]) {
+                    str += "0";
+                }
+                else {
+                    str += " ";
+                }
+            }
+            str += "\n";
+        }
+
+        return str;
     }
 }

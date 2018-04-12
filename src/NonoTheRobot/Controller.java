@@ -81,12 +81,10 @@ public class Controller {
             fullStep = model.getFullStepString();
             currentStep = 0;
             displayLaby();
+            Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(10000.f/fullStep.size()), event -> nextStep()));
+            fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+            fiveSecondsWonder.play();
         }
-
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.millis(10000.f/fullStep.size()), event -> nextStep()));
-        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
-        fiveSecondsWonder.play();
-
     }
 
 }
